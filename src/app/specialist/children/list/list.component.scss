@@ -1,0 +1,38 @@
+.spec-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    ion-card {
+        width: 300px;
+        min-height: 300px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+
+        .card-buttons {
+            align-self: flex-end;
+            flex-basis: 100%;
+        }
+
+        &.add-specialist {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            p {
+                line-height: 1;
+                margin: 0;
+
+                ion-icon {
+                    font-size: 64px;
+                    color: var(--ion-color-primary);
+                }
+            }
+
+        }
+    }
+}

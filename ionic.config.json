@@ -1,5 +1,7 @@
 {
   "name": "_psy-manager",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

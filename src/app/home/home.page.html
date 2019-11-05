@@ -5,11 +5,18 @@
     </ion-buttons>
     <ion-title>
       MANAGER
-      <a *ngFor="let menuItem of menu" [routerLink]="[menuItem.link]">{{menuItem.title}}</a>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Home</ion-card-subtitle>
+      <ion-card-title>Home</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Home Page
+    </ion-card-content>
+  </ion-card>
 </ion-content>

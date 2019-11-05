@@ -1,0 +1,44 @@
+.arrow-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ion-icon {
+        cursor: pointer;
+        transition: .5s;
+        border-radius: 50%;
+
+        &:hover {
+            background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+        }
+    }
+}
+
+.calendar {
+    display: flex;
+    justify-content: space-evenly;
+    // align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 0;
+
+    .date {
+        width: 14%;
+        border: solid 1px transparent;
+        // border-bottom: solid 1px var(--ion-color-primary);
+        margin: 3px 0;
+        cursor: pointer;
+
+        &.space {
+            border-color: transparent;
+            cursor: auto;
+        }
+
+        &.busy {
+            font-weight: 600;
+            color: var(--ion-color-primary);
+        }
+        &.today {
+            border-color: var(--ion-color-primary);
+        }
+    }
+}

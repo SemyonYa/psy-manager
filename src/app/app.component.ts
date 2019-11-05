@@ -3,6 +3,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthService } from './_services/auth.service';
+import { BehaviorSubject } from 'rxjs';
+import { UserData } from './_models/user-data';
 
 @Component({
   selector: 'app-root',
@@ -11,23 +14,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
-  ];
-
+  authData = new BehaviorSubject<UserData | null>(null);
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authService: AuthService
   ) {
     this.initializeApp();
   }
@@ -36,6 +28,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.authData = this.authService.authData;
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

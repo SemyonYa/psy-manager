@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Распространиение расписания</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="form">
+  <div class="alert alert-info" [ngStyle]="{margin: '10px'}">
+    <p>Данная процедура позволяет создать расписание на длительный период по аналогии с текущим днем.</p>
+    <b>ВНИМАНИЕ!</b>
+    <p>Созданное ранее расписание в выбранный период будет перезаписано.</p>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input type="hidden" formControlName="specialistId" />
+    <input type="hidden" formControlName="dateFrom" />
+    <ion-list>
+      <ion-radio-group>
+        <ion-list-header>
+          <ion-label>Способ распространения расписания</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>На каждый день</ion-label>
+          <ion-radio slot="start" value="griff"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>На текущий день недели</ion-label>
+          <ion-radio slot="start" value="biff" checked></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+    <ion-item>
+      <ion-label>Начало периода</ion-label>
+      <ion-datetime display-format="DD.MM.YYYY" formControlName="start" doneText="Ок" cancelText="Отмена"
+        [min]="minDate" [max]="maxDate">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Конец периода</ion-label>
+      <ion-datetime display-format="DD.MM.YYYY" formControlName="end" doneText="Ок" cancelText="Отмена" [min]="minDate"
+        [max]="maxDate">
+      </ion-datetime>
+    </ion-item>
+    <div *ngIf="form.errors" [ngStyle]="{margin: '10px'}">
+      <div class="alert alert-danger" *ngIf="form.errors['startMoreEnd']">
+        Дата начала периода больше даты окончания.
+      </div>
+    </div>
+    <ion-toolbar [ngStyle]="{textAlign: 'right', padding: '0 10px'}">
+      <ion-button routerDirection="root" color="dark" size="small" strong (click)="close()"> Отменить </ion-button>
+      <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid">
+        Сохранить </ion-button>
+    </ion-toolbar>
+  </form>
+  <div class="alert alert-success" *ngIf="success">Успешно!</div>
+</ion-content>

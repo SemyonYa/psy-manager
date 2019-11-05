@@ -1,0 +1,30 @@
+<ion-content>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button fill="solid" color="secondary" [routerLink]="['create']">
+        <ion-icon slot="end" name="add"></ion-icon>
+        Добавить
+      </ion-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+    <ion-buttons slot="primary" title="Клонировать услугу другого специалиста...">
+      <ion-button fill="solid" color="secondary" [routerLink]="['clone']">
+        Клонировать
+        <ion-icon slot="end" name="copy"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item *ngFor="let good of goods | async">
+      <ion-label>
+        <h5>
+          {{good.name}}
+          <ion-icon name="eye" (click)="view(good.id)" class="link"></ion-icon>
+          <ion-icon name="create" [routerLink]="['edit', good.id]" class="link"></ion-icon>
+        </h5>
+        <p>{{good.description}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

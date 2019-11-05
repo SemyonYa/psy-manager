@@ -1,0 +1,45 @@
+* {
+    outline: none;
+}
+
+.wrap {
+    background-color: var(--ion-color-primary-contrast);
+    padding: 5px;
+}
+
+.link {
+    cursor: pointer;
+    color: var(--ion-color-secondary);
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 2px;
+
+    thead {
+        font-weight: 600;
+        background-color: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+    }
+
+    td {
+        padding: 4px;
+        border-top: solid 1px var(--ion-color-secondary);
+        border-bottom: solid 1px var(--ion-color-secondary);
+
+        ion-icon {
+            color: var(--ion-color-tertiary);
+            cursor: pointer;
+        }
+    }
+}
+
+.active-menu-item {
+    // background-color: var(--ion-color-primary);
+    color: var(--ion-color-secondary);
+    font-weight: 600;
+}
+
+button[type=submit] {
+    background-color: transparent;
+}

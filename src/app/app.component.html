@@ -8,11 +8,43 @@
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/home']" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{exact:true}">
+              <ion-icon slot="start" name="home"></ion-icon>
               <ion-label>
-                {{p.title}}
+                Домой
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/specialist']" routerLinkActive="active-menu-item">
+              <ion-icon slot="start" name="people"></ion-icon>
+              <ion-label>
+                Специалисты
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/user']" routerLinkActive="active-menu-item">
+              <ion-icon slot="start" name="person-add"></ion-icon>
+              <ion-label>
+                Пользователи
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value == null">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/login']" routerLinkActive="active-menu-item">
+              <ion-icon slot="start" name="log-in"></ion-icon>
+              <ion-label>
+                Вход
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" (click)="logout()" *ngIf="authData.value != null">
+            <ion-item>
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>
+                Выход ({{authData.value.login}})
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

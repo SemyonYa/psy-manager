@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="end">
+      <ion-icon name="close" (click)="close()"></ion-icon>
+    </ion-buttons>
+    <ion-title>Редактирование ({{id}})</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="form">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input type="hidden" formControlName="specialistId" />
+    <input type="hidden" formControlName="seanceStatus" />
+    <ion-item>
+      <ion-label position="floating">Дата</ion-label>
+      <ion-datetime formControlName="date" display-format="DD.MM.YYYY" doneText="Ок" cancelText="Отмена"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Время</ion-label>
+      <ion-datetime formControlName="time" display-format="HH:mm" doneText="Ок" cancelText="Отмена"
+        minuteValues="0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Услуга</ion-label>
+      <ion-select formControlName="goodId" placeholder="Выберите услугу" interface="alert" okText="Ок"
+        cancelText="Отмена" (ionChange)="changeGood()">
+        <ion-select-option *ngFor="let good of goods" [value]="good.id" [selected]="good.id == currentGoodId">
+          {{good.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Продолжительность</ion-label>
+      <ion-input type="number" formControlName="duration"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Цена</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+    <div *ngIf="form.errors" [ngStyle]="{margin: '10px'}">
+      <div *ngIf="form.errors['timeIsBusy']" class="alert alert-danger">
+        Выбранный период пересекается с уже существующими сеансами.
+      </div>
+      <div *ngIf="form.errors['outOfDay']" class="alert alert-danger">
+        Сеанс выходит за рамки дня.
+      </div>
+    </div>
+    <div class="alert alert-warning" *ngIf="removeError">
+      Удаление невозможно, так как сеанс не имеет статус "Свободен".
+    </div>
+    <ion-toolbar [ngStyle]="{textAlign: 'right', padding: '0 10px'}">
+        <ion-button routerDirection="root" color="danger" size="small" strong (click)="remove()"> Удалить </ion-button>
+        <ion-button routerDirection="root" color="dark" size="small" strong (click)="close()"> Отменить </ion-button>
+        <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid">
+          Сохранить </ion-button>
+    </ion-toolbar>
+  </form>
+</ion-content>

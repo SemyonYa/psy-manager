@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="clearDate()">
+        Очистить день
+        <ion-icon slot="end" name="trash"></ion-icon>
+      </ion-button>
+      <ion-button (click)="copyFromDate()">
+        Дублировать с даты
+        <ion-icon slot="end" name="copy"></ion-icon>
+      </ion-button>
+      <ion-button (click)="shareByWeekday()">
+        Распространить
+        <ion-icon slot="end" name="share"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{date | date:"dd.MM.yyyy"}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="timing">
+    <div *ngFor="let f of fiveMinutes"
+      [ngClass]="{'five-minutes': true, 'busy': f.seance > 0, 'start': f.isStart, 'end': f.isEnd }"
+      (click)="openTime(f.seance, f.hour, f.minutes)">
+      <h5 *ngIf="(f.n - 1) % 12 == 0">{{f.hour | number:'2.0-0'}}:00 </h5>
+      <h6 *ngIf="f.isStart">{{f.good}}</h6>
+    </div>
+  </div>
+</ion-content>

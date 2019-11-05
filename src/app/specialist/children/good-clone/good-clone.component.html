@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Клонирование</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="specialists">
+  <ion-card *ngFor="let spec of specialists" (click)="selectSpecialist(spec.id)">
+    <ion-card-header>
+      <ion-card-subtitle>{{spec.description}}</ion-card-subtitle>
+      <ion-card-title>{{spec.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="spec.id == currentSpecialistId" class="inner-card-content">
+      <ion-card text-center color="secondary" *ngFor="let good of goods">
+        <ion-card-header>
+          <ion-card-title>{{good.name}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <b>Описание:</b>
+          <p>{{good.description}}</p>
+          <b>Цена:</b>
+          <p>{{good.price}}</p>
+          <b>Продолжительность:</b>
+          <p>{{good.duration}}</p>
+        </ion-card-content>
+        <ion-button (click)="selectGood(good.id)"> Склонировать </ion-button>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
