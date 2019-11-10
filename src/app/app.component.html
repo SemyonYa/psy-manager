@@ -3,16 +3,16 @@
     <ion-menu type="overlay">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Menu</ion-title>
+          <ion-title>{{authData.value?.organization}}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/home']" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{exact:true}">
-              <ion-icon slot="start" name="home"></ion-icon>
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/desktop']" routerLinkActive="active-menu-item">
+              <ion-icon slot="start" name="desktop"></ion-icon>
               <ion-label>
-                Домой
+                Рабочий стол
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -29,6 +29,14 @@
               <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>
                 Пользователи
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/profile']" routerLinkActive="active-menu-item">
+              <ion-icon slot="start" name="settings"></ion-icon>
+              <ion-label>
+                Профиль
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

@@ -137,7 +137,7 @@ export class DataService {
   ///
   // SEANCES
   ///
-  getSeances(specialistId, date) {
+  getSeances(specialistId: number, date: string) {
     this.get(environment.host + '/seance/all', '&specialistId=' + specialistId + '&date=' + date)
       .pipe(
         map(
@@ -251,7 +251,7 @@ export class DataService {
         map(
           (resp) => {
             if (resp) {
-              // console.log(resp);
+              console.log(resp);
               return resp;
             } else {
               return null;

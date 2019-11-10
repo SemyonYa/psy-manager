@@ -1,4 +1,4 @@
-<div class="wrap">
+<ion-content>
   <div class="spec-list">
     <ion-card *ngFor="let spec of specialists | async">
       <ion-card-header>
@@ -13,8 +13,10 @@
         incidunt nemo repellendus saepe corporis. -->
       </ion-card-content>
       <p text-center class="card-buttons">
-        <ion-button [routerLink]="['/specialist/' + spec.id + '/good']" fill="outline" size="small" expand="full" round> Услуги </ion-button>  
-        <ion-button [routerLink]="['/specialist/' + spec.id + '/schedule']" fill="outline" size="small" expand="full" round> Расписание </ion-button>
+        <ion-button [routerLink]="['/specialist/' + spec.id + '/good']" fill="outline" size="small" expand="full" round>
+          Услуги </ion-button>
+        <ion-button [routerLink]="['/specialist/' + spec.id + '/schedule']" fill="outline" size="small" expand="full"
+          round> Расписание </ion-button>
       </p>
     </ion-card>
     <ion-card class="add-specialist" [routerLink]="['/specialist/create']">
@@ -23,4 +25,4 @@
       </p>
     </ion-card>
   </div>
-</div>
+</ion-content>

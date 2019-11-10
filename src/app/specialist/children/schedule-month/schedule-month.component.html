@@ -9,11 +9,15 @@
     </ion-col>  
   </ion-row>
   <ion-row>
-    <ion-col size="1" size-sm="1" size-md="1" offset-md="1" size-lg="1" offset-lg="2" size-xl="1" offset-xl="3"
-      class="arrow-column">
+    <ion-col size="2" offset-sm="4" class="arrow-column">
       <ion-icon name="arrow-dropleft" size="large" (click)="previous()" *ngIf="previousIsVisible"></ion-icon>
     </ion-col>
-    <ion-col size="10" size-sm="10" size-md="8" size-lg="6" size-xl="4">
+    <ion-col size="2" class="arrow-column">
+      <ion-icon name="arrow-dropright" size="large" (click)="next()" *ngIf="nextIsVisible"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" size-sm="11" size-md="10" offset-md="1" size-lg="8" offset-lg="2" size-xl="6" offset-xl="3">
       <ion-card text-center>
         <ion-card-header color="primary">
           <ion-card-subtitle>{{month.y}}</ion-card-subtitle>
@@ -22,14 +26,13 @@
         <ion-card-content>
           <div class="calendar">
             <div class="date space" *ngFor="let s of beginSpaces"></div>
-            <div [ngClass]="{date: true, busy: d.isBusy, today: d.isToday}" *ngFor="let d of dates" (click)="openDate(d.n)">{{d.n}}</div>
+            <div [ngClass]="{date: true, busy: d.isBusy, today: d.isToday}" *ngFor="let d of dates"
+              (click)="openDate(d.n)">
+              {{d.n}}</div>
             <div class="date space" *ngFor="let s of finalSpaces"></div>
           </div>
         </ion-card-content>
       </ion-card>
-    </ion-col>
-    <ion-col size="10" size-sm="1" size-md="1" size-lg="1" size-xl="1" class="arrow-column">
-      <ion-icon name="arrow-dropright" size="large" (click)="next()" *ngIf="nextIsVisible"></ion-icon>
     </ion-col>
   </ion-row>
 </ion-content>

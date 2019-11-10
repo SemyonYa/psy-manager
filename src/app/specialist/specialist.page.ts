@@ -7,11 +7,11 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['./specialist.page.scss'],
 })
 export class SpecialistPage implements OnInit {
-  organization = '';
+  // organization = '';
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.organization = this.authService.getOrganizationName();
+    // this.organization = this.authService.getOrganizationName();
   }
 
 }

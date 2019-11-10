@@ -117,7 +117,8 @@ export class ScheduleDateComponent implements OnInit {
         specialistId: this.specialistId,
         date: this.date,
         id
-      }
+      },
+      cssClass: 'edit-modal'
     });
     return await modal.present();
   }
@@ -139,7 +140,8 @@ export class ScheduleDateComponent implements OnInit {
       componentProps: {
         specialistId: this.specialistId,
         date: this.date,
-      }
+      },
+      cssClass: 'edit-modal'
     });
     return await modal.present();
   }

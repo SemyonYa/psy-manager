@@ -122,6 +122,6 @@ export class ScheduleMonthComponent implements OnInit {
   }
 
   changeMonth() {
-    alert('changed');
+    alert('Надо подумать, надо ли');
   }
 }

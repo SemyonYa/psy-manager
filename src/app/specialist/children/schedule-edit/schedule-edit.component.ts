@@ -100,7 +100,7 @@ export class ScheduleEditComponent implements OnInit {
 
   checkForm(formGroup: FormGroup): Observable<any> {
     const checkDate = new Date(formGroup.get('date').value);
-    console.log('check date', checkDate);
+    console.log('check date', formGroup);
     if (this.form) {
       // tslint:disable-next-line:max-line-length
       return this.dataService.checkSeanceEdit(this.specialistId, formGroup.get('time').value, formGroup.get('duration').value, HelpMe.dateToString(checkDate), this.id);

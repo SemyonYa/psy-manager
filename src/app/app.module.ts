@@ -10,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomePageModule } from './home/home.module';
+import { DesktopPageModule } from './desktop/desktop.module';
 import { SpecialistPageModule } from './specialist/specialist.module';
 import { CustomIonicRreuseStrategy } from './_services/custom-ionic-reuse-strategy';
 
@@ -23,7 +23,7 @@ import { CustomIonicRreuseStrategy } from './_services/custom-ionic-reuse-strate
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    HomePageModule,
+    DesktopPageModule,
     SpecialistPageModule
   ],
   providers: [

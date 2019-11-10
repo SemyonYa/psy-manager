@@ -9,7 +9,7 @@
 <ion-content *ngIf="form">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <input type="hidden" formControlName="specialistId" />
-    <input type="hidden" formControlName="seanceStatus" />
+    <input type="hidden" formControlName="status" />
     <ion-item>
       <ion-label position="floating">Дата</ion-label>
       <ion-datetime formControlName="date" display-format="DD.MM.YYYY" doneText="Ок" cancelText="Отмена"></ion-datetime>

@@ -1,9 +1,7 @@
 import { Time } from '@angular/common';
 import { FormGroup, FormControl, Validators, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 import { SeanceStatus } from './seance-status.enum';
-import { of, Observable } from 'rxjs';
 import { HelpMe } from './help-me';
-import { Specialist } from './specialist';
 
 export class Seance {
     id: number;
@@ -11,16 +9,16 @@ export class Seance {
     time: Time;
     duration: number;
     price: number;
-    seanceStatus: number;
+    status: number;
     goodId: number;
 
-    constructor(id: string, date: string, time: string, duration: string, price: string, seanceStatus: string, goodId: string) {
+    constructor(id: string, date: string, time: string, duration: string, price: string, status: string, goodId: string) {
         this.id = Number.parseInt(id, 10);
         this.date = date;
         this.time = { hours: Number.parseInt(time.split(':')[0], 10), minutes: Number.parseInt(time.split(':')[1], 10) };
         this.duration = Number.parseInt(duration, 10);
         this.price = Number.parseInt(price, 10);
-        this.seanceStatus = Number.parseInt(seanceStatus, 10);
+        this.status = Number.parseInt(status, 10);
         this.goodId = Number.parseInt(goodId, 10);
     }
 
@@ -33,7 +31,7 @@ export class Seance {
             time: new FormControl(time, Validators.required),
             duration: new FormControl('', [Validators.required, Validators.min(5)]),
             price: new FormControl('', [Validators.required, Validators.min(0)]),
-            seanceStatus: new FormControl(SeanceStatus.Created, Validators.required),
+            status: new FormControl(SeanceStatus.Created, Validators.required),
             goodId: new FormControl('', Validators.required),
         }, [], checkForm);
     }
@@ -51,7 +49,8 @@ export class Seance {
             start: new FormControl('', Validators.required),
             end: new FormControl('', Validators.required),
             dateFrom: new FormControl(date, Validators.required),
-            specialistId: new FormControl(specialistId, Validators.required)
+            specialistId: new FormControl(specialistId, Validators.required),
+            isWeekday: new FormControl(1, Validators.required)
         }, checkDates);
     }
 
@@ -63,8 +62,16 @@ export class Seance {
             time: new FormControl(HelpMe.timeToString(this.time), Validators.required),
             duration: new FormControl(this.duration, [Validators.required, Validators.min(0)]),
             price: new FormControl(this.price, [Validators.required, Validators.min(0)]),
-            seanceStatus: new FormControl(this.seanceStatus, Validators.required),
+            status: new FormControl(this.status, Validators.required),
             goodId: new FormControl(this.goodId, Validators.required),
         }, [], checkForm);
+    }
+
+    getMarginTop(): string {
+        return (this.time.hours * 12 + this.time.minutes / 5) * 4 + 'px';
+    }
+
+    getHeight(): string {
+        return this.duration / 5 * 4 + 'px';
     }
 }

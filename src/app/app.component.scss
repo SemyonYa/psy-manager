@@ -43,3 +43,13 @@ table {
 button[type=submit] {
     background-color: transparent;
 }
+@media (max-width: 1023px) {
+    .mobile-hidden {
+        display: none;
+    }
+}
+
+
+.edit-modal {
+    --height: 700px;
+}

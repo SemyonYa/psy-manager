@@ -27,7 +27,7 @@ export class ScheduleShareModalComponent implements OnInit {
   }
 
   submit() {
-    console.log('share', this.form);
+    console.log('share', this.form.value);
     this.dataService.shareByWeekday(this.form.value)
       .subscribe(
         (resp) => {

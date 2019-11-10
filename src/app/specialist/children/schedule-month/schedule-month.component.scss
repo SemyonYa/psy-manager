@@ -39,6 +39,8 @@
         }
         &.today {
             border-color: var(--ion-color-primary);
+            border-left-width: 3px;
+            border-right-width: 3px;
         }
     }
 }

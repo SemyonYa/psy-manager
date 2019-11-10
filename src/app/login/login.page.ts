@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     if (this.authService.authData.value) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/desktop']);
     }
     this.form = new FormGroup({
       app: new FormControl('manager'),
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
             if (answer !== false) {
               // const userData = new UserData();
               this.authService.login(answer as UserData);
-              this.router.navigate(['/home']);
+              this.router.navigate(['/desktop']);
             } else {
               this.form.reset();
             }

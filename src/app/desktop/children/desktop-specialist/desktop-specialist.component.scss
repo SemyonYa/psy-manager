@@ -1,0 +1,87 @@
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ion-segment {
+    width: auto;
+}
+
+.five-minutes {
+    width: 100%;
+    border-top: solid 1px #e4e4e4;
+    height: 4px;
+
+    &.minutes20 {
+        border-top-color: #ccc;
+    }
+
+    &.hour-start {
+        border-top-color: var(--ion-color-primary);
+    }
+
+    .hour {
+        line-height: 1;
+        position: absolute;
+        font-size: 47px;
+    }
+
+    .minutes {
+        line-height: 1;
+        position: absolute;
+        padding-left: 55px;
+        font-size: 11px;
+        // background-color: rgba(255,255,255,.99);
+    }
+}
+
+.seance {
+    position: absolute;
+    border: solid 1px var(--ion-color-secondary);
+    border-radius: 4px;
+    width: calc(100% - 100px);
+    padding: 5px 15px;
+    right: 16px;
+    color: black;
+    
+    h6 {
+        font-weight: 600;
+    }
+
+    &.created {
+        background-color: rgba(var(--ion-color-medium-rgb), 0.5);
+        border-color: var(--ion-color-medium);
+    }
+    
+    &.scheduled {
+        background-color: rgba(var(--ion-color-primary-rgb), 0.5);
+        border-color: var(--ion-color-primary);
+    }
+    
+    &.aborted {
+        background-color: rgba(var(--ion-color-danger-rgb), 0.5);
+        border-color: var(--ion-color-danger);
+    }
+    
+    &.finished {
+        background-color: rgba(var(--ion-color-success-rgb), 0.5);
+        border-color: var(--ion-color-success);
+    }
+}
+
+.isWeekView {
+    width: 13%;
+
+    ion-card-header {
+        text-align: center;
+    }
+
+    ion-card-content {
+        padding: 0;
+
+        .seance {
+            right: 0;
+        }
+    }
+}

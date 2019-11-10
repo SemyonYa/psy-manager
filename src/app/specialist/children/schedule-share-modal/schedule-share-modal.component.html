@@ -16,17 +16,17 @@
     <input type="hidden" formControlName="specialistId" />
     <input type="hidden" formControlName="dateFrom" />
     <ion-list>
-      <ion-radio-group>
+      <ion-radio-group formControlName="isWeekday">
         <ion-list-header>
           <ion-label>Способ распространения расписания</ion-label>
         </ion-list-header>
         <ion-item>
           <ion-label>На каждый день</ion-label>
-          <ion-radio slot="start" value="griff"></ion-radio>
+          <ion-radio slot="start" value="0"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>На текущий день недели</ion-label>
-          <ion-radio slot="start" value="biff" checked></ion-radio>
+          <ion-radio slot="start" value="1" checked></ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-list>
