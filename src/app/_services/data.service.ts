@@ -138,15 +138,15 @@ export class DataService {
   // SEANCES
   ///
   getSeances(specialistId: number, date: string) {
-    this.get(environment.host + '/seance/all', '&specialistId=' + specialistId + '&date=' + date)
+    return this.get(environment.host + '/seance/all', '&specialistId=' + specialistId + '&date=' + date)
       .pipe(
         map(
           (data: any[]) => data.map(s => new Seance(s.id, s.date, s.time, s.duration, s.price, s.seance_status, s.good_id))
         )
-      )
-      .subscribe(
-        (data: Seance[]) => this.seances.next(data)
       );
+      // .subscribe(
+      //   (data: Seance[]) => this.seances.next(data)
+      // );
   }
 
   getSeance(id) {

@@ -27,20 +27,47 @@
 </ion-header>
 
 <ion-content>
-  <ion-card [ngClass]="{'isWeekView': isWeekView}">
-    <ion-card-header>
-      <ion-card-title>{{date | date:'dd.MM.yyyy'}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div *ngFor="let seance of seances" [ngStyle]="{marginTop: seance.getMarginTop(), height: seance.getHeight()}" (click)="openSeance(seance.id)"
-        [ngClass]="{'seance': true, 'created': seance.status === 1, 'scheduled': seance.status === 2, 'aborted': seance.status === 3, 'finished': seance.status === 4}">
-        <h6>{{seance.goodId + ' -- ' + seance.id}}</h6>
-      </div>
-      <div *ngFor="let fm of fms"
-        [ngClass]="{'five-minutes': true, 'hour-start': fm.minutes === 0, minutes20: fm.minutes % 15 === 0}">
-        <span [ngClass]="{'minutes': true}" *ngIf="fm.minutes % 15 === 0">{{fm.minutes | number:'2.0-0'}}</span>
-        <span class="hour" *ngIf="fm.minutes === 0">{{fm.hour | number:'2.0-0'}}</span>
-      </div>
-    </ion-card-content>
-  </ion-card>
+
+  <!-- DAY -->
+  <div *ngIf="!isWeekView">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{date | date:'dd.MM.yyyy'}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let seance of seances" [ngStyle]="{marginTop: seance.getMarginTop(), height: seance.getHeight()}"
+          (click)="openSeance(seance.id)"
+          [ngClass]="{'seance': true, 'created': seance.status === 1, 'scheduled': seance.status === 2, 'aborted': seance.status === 3, 'finished': seance.status === 4}">
+          <h6>{{seance.goodId + ' -- ' + seance.id}}</h6>
+        </div>
+        <div *ngFor="let fm of fms"
+          [ngClass]="{'five-minutes': true, 'hour-start': fm.minutes === 0, minutes20: fm.minutes % 15 === 0}">
+          <span [ngClass]="{'minutes': true}" *ngIf="fm.minutes % 15 === 0">{{fm.minutes | number:'2.0-0'}}</span>
+          <span class="hour" *ngIf="fm.minutes === 0">{{fm.hour | number:'2.0-0'}}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- WEEK -->
+  <div *ngIf="isWeekView" [ngClass]="{'isWeekView': true}">
+    <ion-card *ngFor="let day of weekSeances">
+      <ion-card-header>
+        <ion-card-title>{{day.date | date:'dd.MM.yyyy'}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let seance of (day.seances | async)" [ngStyle]="{marginTop: seance.getMarginTop(), height: seance.getHeight()}"
+          (click)="openSeance(seance.id)"
+          [ngClass]="{'seance': true, 'created': seance.status === 1, 'scheduled': seance.status === 2, 'aborted': seance.status === 3, 'finished': seance.status === 4}">
+          <h6>{{seance.goodId + ' -- ' + seance.id}}</h6>
+        </div>
+        <div *ngFor="let fm of fms"
+          [ngClass]="{'five-minutes': true, 'hour-start': fm.minutes === 0, minutes20: fm.minutes % 15 === 0}">
+          <span [ngClass]="{'minutes': true}" *ngIf="fm.minutes % 15 === 0">{{fm.minutes | number:'2.0-0'}}</span>
+          <span class="hour" *ngIf="fm.minutes === 0">{{fm.hour | number:'2.0-0'}}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>

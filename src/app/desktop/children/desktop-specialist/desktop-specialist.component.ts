@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/_services/data.service';
 import { Specialist } from 'src/app/_models/specialist';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HelpMe } from 'src/app/_models/help-me';
 import { IonDatetime, ModalController } from '@ionic/angular';
 import { FiveMinutes } from 'src/app/_models/five-minutes';
@@ -36,17 +36,23 @@ export class DesktopSpecialistComponent implements OnInit {
   fms: FiveMinutes[] = [];
   isWeekView = false;
   seances: Seance[] = [];
+  weekSeances: { date: Date, seances: Observable<Seance[]> }[] = [
+    { date: new Date(), seances: of([]) },
+    { date: new Date(), seances: of([]) },
+    { date: new Date(), seances: of([]) },
+    { date: new Date(), seances: of([]) },
+    { date: new Date(), seances: of([]) },
+    { date: new Date(), seances: of([]) },
+    { date: new Date(), seances: of([]) }
+  ];
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private modalController: ModalController) { }
 
   ngOnInit() {
+
     this.id = this.activatedRoute.snapshot.params.specId;
     this.specialist = this.dataService.getSpecialist(this.id);
     this.fillFms();
-    this.getSeances();
-  }
-
-  selectDate(dateNode: IonDatetime) {
-    this.date = new Date(dateNode.value.split('T')[0]);
+    this.fillSeances();
   }
 
   fillFms() {
@@ -57,18 +63,43 @@ export class DesktopSpecialistComponent implements OnInit {
     }
   }
 
-  changeView(event) {
-    this.isWeekView = event.target.value === 'week';
+  fillSeances() {
+    if (this.isWeekView) {
+      this.getWeekSeances();
+    } else {
+      this.getSeances();
+    }
+    console.log(this.weekSeances);
   }
 
   getSeances() {
-    this.dataService.getSeances(this.id, HelpMe.dateToString(this.date));
-    this.dataService.seances
+    this.dataService.getSeances(this.id, HelpMe.dateToString(this.date))
       .subscribe(
         (data: Seance[]) => {
           this.seances = data;
         }
       );
+    // this.dataService.seances
+  }
+
+  getWeekSeances() {
+    for (let i = 0; i <= 6; i++) {
+      const currentDate = new Date(this.date);
+      currentDate.setDate(this.date.getDate() + i);
+      console.log('current', i, currentDate);
+      console.log(i, this.date);
+      this.weekSeances[i] = { date: currentDate, seances: this.dataService.getSeances(this.id, HelpMe.dateToString(currentDate))};
+    }
+  }
+
+  selectDate(dateNode: IonDatetime) {
+    this.date = new Date(dateNode.value.split('T')[0]);
+    this.fillSeances();
+  }
+
+  changeView(event) {
+    this.isWeekView = event.target.value === 'week';
+    this.fillSeances();
   }
 
   updatePage() {
