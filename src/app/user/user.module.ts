@@ -1,26 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { UserPage } from './user.page';
+import { UserCreateComponent } from './children/user-create/user-create.component';
+import { UserListComponent } from './children/user-list/user-list.component';
+import { UserEditComponent } from './children/user-edit/user-edit.component';
+import { UserRoutingModule } from './user-routing.module';
+import { UserViewComponent } from './children/user-view/user-view.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: UserPage
-  }
-];
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    UserRoutingModule
   ],
-  declarations: [UserPage]
+  declarations: [
+    UserPage,
+    UserViewComponent,
+    UserCreateComponent,
+    UserListComponent,
+    UserEditComponent
+  ]
 })
 export class UserPageModule {}

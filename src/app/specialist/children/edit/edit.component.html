@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="delete()">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Редактирование</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -23,8 +28,10 @@
           <ion-label position="floating">Описание</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>
-        <ion-button routerDirection="root" color="dark" size="small" strong [routerLink]="['/specialist']"> Отменить </ion-button>
-        <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid"> Сохранить </ion-button>
+        <ion-button routerDirection="root" color="dark" size="small" strong [routerLink]="['/specialist']"> Отменить
+        </ion-button>
+        <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid">
+          Сохранить </ion-button>
       </form>
     </ion-col>
   </ion-row>

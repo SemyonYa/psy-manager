@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DesktopPageModule } from './desktop/desktop.module';
 import { SpecialistPageModule } from './specialist/specialist.module';
 import { CustomIonicRreuseStrategy } from './_services/custom-ionic-reuse-strategy';
+import { UserPageModule } from './user/user.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,8 @@ import { CustomIonicRreuseStrategy } from './_services/custom-ionic-reuse-strate
     HttpClientModule,
     BrowserAnimationsModule,
     DesktopPageModule,
-    SpecialistPageModule
+    SpecialistPageModule,
+    UserPageModule
   ],
   providers: [
     StatusBar,

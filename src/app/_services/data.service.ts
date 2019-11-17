@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Seance } from '../_models/seance';
 import { Time } from '@angular/common';
+import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class DataService {
   goods = new BehaviorSubject<Good[]>([]);
   seances = new BehaviorSubject<Seance[]>([]);
   workdays = new BehaviorSubject<number[]>([]);
+  users = new BehaviorSubject<User[]>([]);
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
@@ -50,6 +52,59 @@ export class DataService {
             }
           }
         ),
+      );
+  }
+
+  ///
+  // USERS
+  ///
+  getUsers() {
+    this.get(environment.host + '/manager-user/all')
+      .pipe(
+        map(
+          (data: any[]) => data.map(u => new User(u.id, u.email, u.phone, u.login, u.specialist_id, u.name))
+        )
+      )
+      .subscribe(
+        (data: User[]) => {
+          this.users.next(data);
+        }
+      );
+  }
+
+  getUser(id) {
+    return this.get(environment.host + '/manager-user/one', '&id=' + id)
+      .pipe(
+        map(
+          (u: any) => new User(u.id, u.email, u.phone, u.login, u.specialist_id, u.name)
+        )
+      );
+  }
+
+  createUser(formData) {
+    return this.post(environment.host + '/manager-user/create', formData);
+  }
+
+  editUser(formData) {
+    return this.post(environment.host + '/manager-user/update', formData);
+  }
+
+  deleteUser(id) {
+    return this.post(environment.host + '/manager-user/delete', { id });
+  }
+
+  validateCreateUserLogin(login, currentUserId) {
+    return this.post(environment.host + '/manager-user/validate-create-user-login', { login, currentUserId })
+      .pipe(
+        map(
+          (resp) => {
+            if (resp) {
+              return resp;
+            } else {
+              return null;
+            }
+          }
+        )
       );
   }
 
@@ -94,8 +149,8 @@ export class DataService {
     return this.post(environment.host + '/specialist/update', formData);
   }
 
-  deleteSpecialist() {
-
+  deleteSpecialist(id: number) {
+    return this.post(environment.host + '/specialist/delete', { id });
   }
 
   ///
@@ -144,9 +199,9 @@ export class DataService {
           (data: any[]) => data.map(s => new Seance(s.id, s.date, s.time, s.duration, s.price, s.seance_status, s.good_id))
         )
       );
-      // .subscribe(
-      //   (data: Seance[]) => this.seances.next(data)
-      // );
+    // .subscribe(
+    //   (data: Seance[]) => this.seances.next(data)
+    // );
   }
 
   getSeance(id) {

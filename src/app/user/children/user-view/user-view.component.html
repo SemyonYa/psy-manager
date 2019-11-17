@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="user;else loadingTitle">{{user.login}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="user;else loading">
+  <pre>{{user | json}}</pre>
+</ion-content>
+
+<ng-template #loading>
+  <ion-progress-bar color="primary" type="indeterminate"></ion-progress-bar>
+</ng-template>
+
+<ng-template #loadingTitle>
+  <ion-icon name="alarm" color="light"></ion-icon>
+</ng-template>
