@@ -32,13 +32,12 @@ ion-segment {
         position: absolute;
         padding-left: 55px;
         font-size: 11px;
-        // background-color: rgba(255,255,255,.99);
     }
 }
 
 .seance {
     position: absolute;
-    border: solid 1px var(--ion-color-secondary);
+    border: solid 1px var(--ion-color-primary);
     border-radius: 4px;
     width: calc(100% - 100px);
     padding: 5px 15px;
@@ -91,4 +90,38 @@ ion-segment {
             }
         }
     }
+}
+
+@media (max-width: 1376px) {
+    .isWeekView {
+    
+        ion-card {
+            margin: 2px;
+            width: calc(14% - 2px);
+    
+            ion-card-header {
+                text-align: center;
+            }
+    
+            ion-card-content {
+                padding: 0;
+    
+                .seance {
+                    right: 0;
+                    width: calc(100% - 48px);
+                    padding: 3px;
+                }
+            }
+        }
+    }
+
+    .five-minutes {
+        .hour {
+            font-size: 30px;
+        }
+        .minutes {
+            padding-left: 34px;
+        }
+    }
+
 }

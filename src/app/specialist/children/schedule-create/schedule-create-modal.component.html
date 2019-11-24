@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-buttons slot="end">
-      <ion-icon name="close" (click)="close()"></ion-icon>
+      <ion-icon name="close" size="large" (click)="close()"></ion-icon>
     </ion-buttons>
     <ion-title>Новая запись</ion-title>
   </ion-toolbar>
@@ -11,28 +11,28 @@
     <input type="hidden" formControlName="specialistId" />
     <input type="hidden" formControlName="status" />
     <ion-item>
-      <ion-label position="floating">Дата</ion-label>
+      <ion-label position="stacked">Дата</ion-label>
       <ion-datetime formControlName="date" display-format="DD.MM.YYYY" doneText="Ок" cancelText="Отмена" readonly>
       </ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Время</ion-label>
+      <ion-label position="stacked">Время</ion-label>
       <ion-datetime formControlName="time" display-format="HH:mm" doneText="Ок" cancelText="Отмена"
         minuteValues="0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Услуга</ion-label>
+      <ion-label position="stacked">Услуга</ion-label>
       <ion-select formControlName="goodId" placeholder="Выберите услугу" interface="alert" okText="Ок"
         cancelText="Отмена" (ionChange)="changeGood()">
         <ion-select-option *ngFor="let good of goods" [value]="good.id">{{good.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Продолжительность</ion-label>
+      <ion-label position="stacked">Продолжительность</ion-label>
       <ion-input type="number" formControlName="duration"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Цена</ion-label>
+      <ion-label position="stacked">Цена</ion-label>
       <ion-input type="number" formControlName="price"></ion-input>
     </ion-item>
     <div *ngIf="form.errors" [ngStyle]="{margin: '10px'}">
@@ -43,10 +43,19 @@
         Сеанс выходит за рамки дня.
       </div>
     </div>
-    <ion-toolbar [ngStyle]="{textAlign: 'right', padding: '0 10px'}">
-      <ion-button routerDirection="root" color="dark" size="small" strong (click)="close()"> Отменить </ion-button>
-      <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid">
-        Сохранить </ion-button>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button routerDirection="root" color="danger" size="small" strong (click)="close()">
+          <ion-icon name="remove-circle-outline" slot="start"></ion-icon>
+          Отменить
+        </ion-button>
+        <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+        <ion-button routerDirection="root" color="secondary" size="small" (click)="submitBtn.click()"
+          [disabled]="form.invalid">
+          <ion-icon slot="start" name="checkmark"></ion-icon>
+          Сохранить
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </form>
 </ion-content>

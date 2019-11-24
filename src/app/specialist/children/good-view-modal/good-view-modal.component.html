@@ -1,14 +1,16 @@
 <ion-header text-center *ngIf="good">
-  <ion-toolbar color="primary">
-        <ion-icon size="large" slot="end" name="close" (click)="close()" class="link"></ion-icon>
+  <ion-toolbar color="secondary">
+    <ion-icon color="light" size="large" slot="end" name="close" (click)="close()" class="link"></ion-icon>
     <h3>{{good.name}}</h3>
   </ion-toolbar>
 </ion-header>
 <ion-content text-center *ngIf="good">
-  <h4>Описание</h4>
-  <p>{{good.description}}</p>
-  <h4>Цена</h4>
-  <p>{{good.price}}</p>
-  <h4>Продолжительность</h4>
-  <p>{{good.duration}}</p>
+  <div [ngStyle]="{padding: '10px'}">
+    <h4>Описание</h4>
+    <p>{{good.description}}</p>
+    <h4>Цена</h4>
+    <p>{{good.price}}</p>
+    <h4>Продолжительность</h4>
+    <p>{{good.duration}}</p>
+  </div>
 </ion-content>

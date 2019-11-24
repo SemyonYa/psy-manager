@@ -3,8 +3,9 @@ import { DataService } from 'src/app/_services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/_models/user';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { ResetChildPasswordComponent } from '../reset-child-password/reset-child-password.component';
 
 @Component({
   selector: 'app-user-edit',
@@ -15,8 +16,9 @@ export class UserEditComponent implements OnInit {
   userId: number;
   user: User;
   form: FormGroup;
+
   // tslint:disable-next-line:max-line-length
-  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private alertController: AlertController) { }
+  constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private alertController: AlertController, private modalController: ModalController) { }
 
   ngOnInit() {
     this.userId = this.activatedRoute.snapshot.params.userId;
@@ -69,6 +71,16 @@ export class UserEditComponent implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async resetChildPassword() {
+    const modal = await this.modalController.create({
+      component: ResetChildPasswordComponent,
+      componentProps: {
+        id: this.userId
+      }
+    });
+    return await modal.present();
   }
 
   validateLogin(control: FormControl): Observable<any> {

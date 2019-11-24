@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/_services/data.service';
 import { HelpMe } from 'src/app/_models/help-me';
+import { IonDatetime } from '@ionic/angular';
 
 @Component({
   selector: 'app-schedule-month',
@@ -57,6 +58,8 @@ export class ScheduleMonthComponent implements OnInit {
       this.router.navigateByUrl('/specialist/' + this.specialistId + '/schedule/month');
     }
     this.getMonthData(this.monthNo);
+    this.currentDateString = HelpMe.stringDateFormParams(this.month.y, this.month.n, 1);
+    // this.workdays = [];
     this.dataService.getWorkdays(this.specialistId, this.month.y, this.month.n);
     this.dataService.workdays
       .subscribe(
@@ -74,10 +77,10 @@ export class ScheduleMonthComponent implements OnInit {
       );
   }
 
-  getMonthData(month: number, isCurrent: boolean = true) {
-    const currentDate = new Date();
-    const firstDayDate = new Date(currentDate.getFullYear(), currentDate.getMonth() * 1 + month * 1, 1, 0, 0, 0, 0);
-    const lastDayDate = new Date(currentDate.getFullYear(), currentDate.getMonth() * 1 + month * 1 + 1, 0, 0, 0, 0, 0);
+  getMonthData(month: number) {
+    // const currentDate = new Date();
+    const firstDayDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() * 1 + month * 1, 1, 0, 0, 0, 0);
+    const lastDayDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() * 1 + month * 1 + 1, 0, 0, 0, 0, 0);
     const firstDayWeekday = (firstDayDate.getDay() == 0) ? 7 : firstDayDate.getDay();
     const lastDayWeekday = (lastDayDate.getDay() == 0) ? 7 : lastDayDate.getDay();
     const lastDay = lastDayDate.getDate();
@@ -98,11 +101,13 @@ export class ScheduleMonthComponent implements OnInit {
   }
 
   openDate(day: string) {
+    console.log('day', day);
     const dayString = (day.toString().length === 1) ? '0' + day : day;
     const monthString = (this.month.n.toString().length === 1) ? '0' + this.month.n : this.month.n;
-    const specialistId = this.activatedRoute.snapshot.parent.params.id;
+    // const specialistId = this.activatedRoute.snapshot.parent.params.id;
+    console.log(this.specialistId);
     // tslint:disable-next-line:max-line-length
-    this.router.navigateByUrl('/specialist/' + specialistId + '/schedule/date/' + HelpMe.stringDateFormParams(this.month.y, this.month.n, day)); // this.month.y + '.' + monthString + '.' + dayString);
+    this.router.navigateByUrl('/specialist/' + this.specialistId + '/schedule/date/' + HelpMe.stringDateFormParams(this.month.y, this.month.n, day)); // this.month.y + '.' + monthString + '.' + dayString);
   }
 
   previous() {
@@ -121,7 +126,15 @@ export class ScheduleMonthComponent implements OnInit {
     this.nextIsVisible = !(this.monthNo === this.maxMonth);
   }
 
-  changeMonth() {
-    alert('Надо подумать, надо ли');
+  changeMonth(dateNode: IonDatetime) {
+    this.currentDateString = dateNode.value.split('T')[0];
+    const dateR = this.currentDateString.split('-');
+    // tslint:disable-next-line:max-line-length
+    this.monthNo = (Number.parseInt(dateR[0], 10) - this.currentDate.getFullYear()) * 12 + Number.parseInt(dateR[1], 10) - this.currentDate.getMonth() - 1;
+    console.log(this.monthNo);
+    this.initMonth();
+    this.previousIsVisible = !(this.monthNo === -1);
+    this.nextIsVisible = !(this.monthNo === this.maxMonth);
+    console.log('month', dateR);
   }
 }

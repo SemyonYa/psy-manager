@@ -8,8 +8,8 @@ import { Specialist } from '../_models/specialist';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Seance } from '../_models/seance';
-import { Time } from '@angular/common';
 import { User } from '../_models/user';
+import { Profile } from '../_models/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -56,13 +56,34 @@ export class DataService {
   }
 
   ///
+  // PROFILE
+  ///
+
+  getProfile(id: number) {
+    return this.get(environment.host + '/manager-user/open-profile')
+      .pipe(
+        map(
+          (p: any) => new Profile(p.organization_name, p.email, p.phone, p.specialists_quantity, p.img)
+        )
+      );
+  }
+
+  saveProfile(formData) {
+    return this.post(environment.host + '/manager-user/save-profile', formData);
+  }
+
+  resetPassword(formData) {
+    return this.post(environment.host + '/manager-user/reset-password', formData);
+  }
+
+  ///
   // USERS
   ///
   getUsers() {
     this.get(environment.host + '/manager-user/all')
       .pipe(
         map(
-          (data: any[]) => data.map(u => new User(u.id, u.email, u.phone, u.login, u.specialist_id, u.name))
+          (data: any[]) => data.map(u => new User(u.id, u.email, u.phone, u.login, u.specialist_id, u.name, u.specialist_img, u.img))
         )
       )
       .subscribe(
@@ -76,7 +97,7 @@ export class DataService {
     return this.get(environment.host + '/manager-user/one', '&id=' + id)
       .pipe(
         map(
-          (u: any) => new User(u.id, u.email, u.phone, u.login, u.specialist_id, u.name)
+          (u: any) => new User(u.id, u.email, u.phone, u.login, u.specialist_id, u.name, u.specialist_img, u.img)
         )
       );
   }
@@ -91,6 +112,10 @@ export class DataService {
 
   deleteUser(id) {
     return this.post(environment.host + '/manager-user/delete', { id });
+  }
+
+  resetChildPassword(formData) {
+    return this.post(environment.host + '/manager-user/reset-child-password', formData);
   }
 
   validateCreateUserLogin(login, currentUserId) {
@@ -108,6 +133,10 @@ export class DataService {
       );
   }
 
+  loadLogo(formData) {
+    return this.post(environment.host + '/manager-user/load-logo', formData);
+  }
+
   ///
   // SPECIALIST
   ///
@@ -118,7 +147,7 @@ export class DataService {
         map(
           (data: any[]) => {
             return data.map(s => {
-              return new Specialist(s.id, s.name, s.description, s.user_id);
+              return new Specialist(s.id, s.name, s.description, s.user_id, s.img);
             });
           }
         )
@@ -135,7 +164,7 @@ export class DataService {
       .pipe(
         map(
           (s: any) => {
-            return new Specialist(s.id, s.name, s.description, s.user_id);
+            return new Specialist(s.id, s.name, s.description, s.user_id, s.img);
           }
         )
       );
@@ -151,6 +180,10 @@ export class DataService {
 
   deleteSpecialist(id: number) {
     return this.post(environment.host + '/specialist/delete', { id });
+  }
+
+  loadSpecialistPhoto(formData) {
+    return this.post(environment.host + '/specialist/load-photo', formData);
   }
 
   ///
@@ -196,7 +229,7 @@ export class DataService {
     return this.get(environment.host + '/seance/all', '&specialistId=' + specialistId + '&date=' + date)
       .pipe(
         map(
-          (data: any[]) => data.map(s => new Seance(s.id, s.date, s.time, s.duration, s.price, s.seance_status, s.good_id))
+          (data: any[]) => data.map(s => new Seance(s.id, s.date, s.time, s.duration, s.price, s.seance_status, s.good_id, s.name))
         )
       );
     // .subscribe(
@@ -208,7 +241,7 @@ export class DataService {
     return this.get(environment.host + '/seance/one', '&id=' + id)
       .pipe(
         map(
-          (s: any) => new Seance(s.id, s.date, s.time, s.duration, s.price, s.seance_status, s.good_id)
+          (s: any) => new Seance(s.id, s.date, s.time, s.duration, s.price, s.seance_status, s.good_id, s.name)
         )
       );
   }

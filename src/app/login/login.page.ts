@@ -19,9 +19,9 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/desktop']);
     }
     this.form = new FormGroup({
-      app: new FormControl('manager'),
-      login: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+      app: new FormControl('manager,spec'),
+      login: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      password: new FormControl('', [Validators.required, Validators.maxLength(20)])
     });
   }
 

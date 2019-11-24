@@ -15,6 +15,7 @@ import { ScheduleMonthComponent } from './children/schedule-month/schedule-month
 import { ScheduleDateComponent } from './children/schedule-date/schedule-date.component';
 import { AuthGuard } from '../_guards/auth.guard';
 import { GoodCloneComponent } from './children/good-clone/good-clone.component';
+import { ManagerRoleGuard } from '../_guards/manager-role.guard';
 
 const goodRoutes: Routes = [
   { path: '', component: GoodListComponent },
@@ -42,7 +43,7 @@ const specialistRoutes: Routes = [
       { path: 'edit/:id', component: EditComponent },
       { path: '', component: ListComponent },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ManagerRoleGuard]
   },
 ];
 

@@ -6,6 +6,7 @@ import { UserViewComponent } from './children/user-view/user-view.component';
 import { UserListComponent } from './children/user-list/user-list.component';
 import { UserEditComponent } from './children/user-edit/user-edit.component';
 import { UserCreateComponent } from './children/user-create/user-create.component';
+import { ManagerRoleGuard } from '../_guards/manager-role.guard';
 
 
 const userRoutes: Routes = [
@@ -18,7 +19,7 @@ const userRoutes: Routes = [
       { path: 'create', component: UserCreateComponent },
       { path: ':userId', component: UserViewComponent },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ManagerRoleGuard]
   },
 ];
 

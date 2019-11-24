@@ -12,27 +12,36 @@
       <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
         <input type="hidden" formControlName="specialistId" />
         <ion-item>
-          <ion-label position="floating">Имя</ion-label>
+          <ion-label position="stacked">Имя</ion-label>
           <ion-input formControlName="name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Описание</ion-label>
+          <ion-label position="stacked">Описание</ion-label>
           <ion-input formControlName="description"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Цена</ion-label>
+          <ion-label position="stacked">Цена</ion-label>
           <ion-input type="number" formControlName="price"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Продолжительность</ion-label>
+          <ion-label position="stacked">Продолжительность</ion-label>
           <ion-input type="number" formControlName="duration"></ion-input>
         </ion-item>
         <ion-item style="display: flex;">
-          <ion-toggle color="primary" formControlName="invisible"></ion-toggle>
-          <ion-icon position="floating" name="eye-off"></ion-icon>
+          <ion-toggle color="secondary" formControlName="invisible"></ion-toggle>
+          <ion-icon position="stacked" name="eye-off" [ngStyle]="{transition: '.4s'}"
+            [ngClass]="{'eye-active': form.value.invisible}"></ion-icon>
         </ion-item>
-        <ion-button routerDirection="root" color="dark" size="small" strong [routerLink]="['/specialist/' + form.value.specialistId + '/good']"> Отменить </ion-button>
-        <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid"> Сохранить </ion-button>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+            <ion-button routerDirection="root" color="secondary" size="small" (click)="submitBtn.click()"
+              [disabled]="form.invalid">
+              <ion-icon slot="start" name="checkmark"></ion-icon>
+              Сохранить
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
       </form>
     </ion-col>
   </ion-row>

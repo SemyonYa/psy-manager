@@ -32,7 +32,9 @@ export class DesktopSpecialistComponent implements OnInit {
   id: number;
   specialist: Observable<Specialist>;
   date = new Date();
-  maxDate = HelpMe.stringDateFormParams((new Date()).getFullYear() + 1, 12, 31);
+  // maxDate: Date = new Date((new Date()).getFullYear() + 1, 11, 31);
+  minDateString = HelpMe.stringDateFormParams((new Date()).getFullYear() - 1, 1, 1);
+  maxDateString = HelpMe.stringDateFormParams((new Date()).getFullYear() + 1, 12, 31);
   fms: FiveMinutes[] = [];
   isWeekView = false;
   seances: Seance[] = [];
@@ -48,7 +50,6 @@ export class DesktopSpecialistComponent implements OnInit {
   constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private modalController: ModalController) { }
 
   ngOnInit() {
-
     this.id = this.activatedRoute.snapshot.params.specId;
     this.specialist = this.dataService.getSpecialist(this.id);
     this.fillFms();
@@ -69,7 +70,6 @@ export class DesktopSpecialistComponent implements OnInit {
     } else {
       this.getSeances();
     }
-    console.log(this.weekSeances);
   }
 
   getSeances() {
@@ -79,15 +79,12 @@ export class DesktopSpecialistComponent implements OnInit {
           this.seances = data;
         }
       );
-    // this.dataService.seances
   }
 
   getWeekSeances() {
     for (let i = 0; i <= 6; i++) {
       const currentDate = new Date(this.date);
       currentDate.setDate(this.date.getDate() + i);
-      console.log('current', i, currentDate);
-      console.log(i, this.date);
       this.weekSeances[i] = { date: currentDate, seances: this.dataService.getSeances(this.id, HelpMe.dateToString(currentDate))};
     }
   }
@@ -103,7 +100,7 @@ export class DesktopSpecialistComponent implements OnInit {
   }
 
   updatePage() {
-    this.getSeances();
+    this.fillSeances();
   }
 
   async openSeance(id) {

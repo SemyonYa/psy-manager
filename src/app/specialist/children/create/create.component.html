@@ -9,21 +9,35 @@
 <ion-content>
   <ion-row>
     <ion-col size="12" size-sm="10" size-md="8" size-lg="6" size-xl="4">
-      <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
-        <ion-item>
-          <ion-label position="floating">Имя</ion-label>
-          <ion-input formControlName="name"></ion-input>
-          <p class="text-danger" *ngIf="form.invalid">
-            <span *ngIf="form.get('name').errors['nameIsUsed']">Уже используется</span>
-          </p>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Описание</ion-label>
-          <ion-input formControlName="description"></ion-input>
-        </ion-item>
-        <ion-button routerDirection="root" color="dark" size="small" strong [routerLink]="['/specialist']"> Отменить </ion-button>
-        <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid"> Сохранить </ion-button>
-      </form>
+      <ion-card>
+        <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+          <ion-item>
+            <ion-label position="stacked">Имя</ion-label>
+            <ion-input formControlName="name" maxLength="45"></ion-input>
+            <div class="text-danger" *ngIf="form.invalid">
+              <p *ngIf="form.get('name').errors['nameIsUsed']">Уже используется</p>
+            </div>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Описание</ion-label>
+            <ion-input formControlName="description"></ion-input>
+          </ion-item>
+          <ion-toolbar>
+            <ion-buttons slot="end">
+              <ion-button color="danger" routerDirection="root" size="small" [routerLink]="['/specialist']">
+                <ion-icon slot="end" name="remove-circle-outline"></ion-icon>
+                Отменить
+              </ion-button>
+              <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+              <ion-button color="secondary" routerDirection="root" size="small" [disabled]="form.invalid"
+                (click)="submitBtn.click()">
+                <ion-icon slot="end" name="checkmark"></ion-icon>
+                Сохранить
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </form>
+      </ion-card>
     </ion-col>
   </ion-row>
 </ion-content>

@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Распространиение расписания</ion-title>
   </ion-toolbar>
@@ -47,10 +49,19 @@
         Дата начала периода больше даты окончания.
       </div>
     </div>
-    <ion-toolbar [ngStyle]="{textAlign: 'right', padding: '0 10px'}">
-      <ion-button routerDirection="root" color="dark" size="small" strong (click)="close()"> Отменить </ion-button>
-      <ion-button routerDirection="root" color="primary" size="small" type="submit" round [disabled]="form.invalid">
-        Сохранить </ion-button>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+        <ion-button routerDirection="root" color="danger" size="small" strong (click)="close()">
+          <ion-icon slot="start" name="remove-circle-outline"></ion-icon>
+          Отменить
+        </ion-button>
+        <ion-button routerDirection="root" color="secondary" size="small" (click)="submitBtn.click()"
+          [disabled]="form.invalid">
+          <ion-icon slot="start" name="checkmark"></ion-icon>
+          Сохранить
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </form>
   <div class="alert alert-success" *ngIf="success">Успешно!</div>

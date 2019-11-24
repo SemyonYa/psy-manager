@@ -2,22 +2,26 @@
   <div class="spec-list">
     <ion-card *ngFor="let spec of specialists | async">
       <ion-card-header>
-        <ion-card-title>
+        <ion-icon name="create" [routerLink]="['/specialist/edit/' + spec.id]" class="link"></ion-icon>
+        <div class="img" [ngStyle]="{backgroundImage: 'url(' + spec.img + ')'}"></div>
+        <!-- <ion-card-title>
           {{spec.name}}
-          <ion-icon name="create" [routerLink]="['/specialist/edit/' + spec.id]" class="link"></ion-icon>
         </ion-card-title>
-        <ion-card-subtitle>{{spec.description}}</ion-card-subtitle>
+        <ion-card-subtitle>{{spec.description}}</ion-card-subtitle> -->
       </ion-card-header>
       <ion-card-content>
-        <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nostrum numquam ab itaque perspiciatis facere
-        incidunt nemo repellendus saepe corporis. -->
+        <div>
+          <h3>{{spec.name}}</h3>
+          <h4>{{spec.description}}</h4>
+          <p text-center class="card-buttons">
+            <ion-button color="secondary" [routerLink]="['/specialist/' + spec.id + '/good']" fill="outline"
+              size="small" expand="full">
+              Услуги </ion-button>
+            <ion-button color="secondary" [routerLink]="['/specialist/' + spec.id + '/schedule']" fill="outline"
+              size="small" expand="full"> Расписание </ion-button>
+          </p>
+        </div>
       </ion-card-content>
-      <p text-center class="card-buttons">
-        <ion-button [routerLink]="['/specialist/' + spec.id + '/good']" fill="outline" size="small" expand="full" round>
-          Услуги </ion-button>
-        <ion-button [routerLink]="['/specialist/' + spec.id + '/schedule']" fill="outline" size="small" expand="full"
-          round> Расписание </ion-button>
-      </p>
     </ion-card>
     <ion-card class="add-specialist" [routerLink]="['/specialist/create']">
       <p text-center>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -8,49 +8,54 @@
 </ion-header>
 
 <ion-content *ngIf="form;else loading">
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <ion-item>
-      <ion-select formControlName="specialistId" placeholder="Выберите специалиста..." interface="alert"
-        okText="Выбрать" cancelText="Отмена">
-        <ion-select-option *ngFor="let specialist of specialists" [value]="specialist.id">{{specialist.name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">E-Mail</ion-label>
-      <ion-input formControlName="email" type="text" maxLength="50"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Телефон</ion-label>
-      <div [ngStyle]="{display: 'flex'}">
-        <span [ngStyle]="{padding: '8px'}">+7</span>
-        <ion-input formControlName="phone" type="text" maxLength="10"></ion-input>
-      </div>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Логин</ion-label>
-      <ion-input formControlName="login" type="text" maxLength="20"></ion-input>
-      <p *ngIf="form.get('login').errors" [ngStyle]="{margin: '0'}">
-        <span class="text-danger" *ngIf="form.get('login').errors['loginIsUsed']">Логин уже занят!</span>
-      </p>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Пароль</ion-label>
-      <ion-input formControlName="password" type="password" maxLength="20"></ion-input>
-    </ion-item>
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-button color="primary" type="submit" fill="solid" [disabled]="form.invalid">
-          <ion-icon slot="start" name="checkmark"></ion-icon>
-          Сохранить
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </form>
+  <ion-card>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <ion-item>
+        <ion-select formControlName="specialistId" placeholder="выберите специалиста..." interface="alert"
+          okText="Выбрать" cancelText="Отмена">
+          <ion-select-option *ngFor="let specialist of specialists" [value]="specialist.id">{{specialist.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">E-Mail</ion-label>
+        <ion-input formControlName="email" type="text" maxLength="50" placeholder="qwerty@qwerty.uio"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Телефон</ion-label>
+        <div [ngStyle]="{display: 'flex'}">
+          <span [ngStyle]="{padding: '8px'}">+7</span>
+          <ion-input formControlName="phone" type="text" maxLength="10" placeholder="XXXXXXXXXX"></ion-input>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Логин</ion-label>
+        <ion-input formControlName="login" type="text" maxLength="20" placeholder="только латиские буквы"></ion-input>
+        <p *ngIf="form.get('login').errors" [ngStyle]="{margin: '0'}">
+          <span class="text-danger" *ngIf="form.get('login').errors['loginIsUsed']">Логин уже занят!</span>
+        </p>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Пароль</ion-label>
+        <ion-input formControlName="password" type="password" maxLength="20" placeholder="не менее 6 символов">
+        </ion-input>
+      </ion-item>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+          <ion-button color="tertiary" routerDirection="root" size="small" [disabled]="form.invalid"
+            (click)="submitBtn.click()">
+            <ion-icon slot="end" name="checkmark"></ion-icon>
+            Сохранить
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </form>
+  </ion-card>
 </ion-content>
 
 <ng-template #loading>
   <div [ngStyle]="{height: '100%'}">
-    <ion-progress-bar color="primary" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar color="tertiary" type="indeterminate"></ion-progress-bar>
   </div>
 </ng-template>

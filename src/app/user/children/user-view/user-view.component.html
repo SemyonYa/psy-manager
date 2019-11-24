@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -8,11 +8,43 @@
 </ion-header>
 
 <ion-content *ngIf="user;else loading">
-  <pre>{{user | json}}</pre>
+  <ion-card [ngStyle]="{maxWidth: '400px'}">
+    <ion-card-header [ngStyle]="{padding: '0'}">
+      <img src="{{user.specialistImg}}">
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list lines="false" inset="false">
+        <ion-item>
+          <ion-label>
+            <b>ID: </b>
+            <span>{{user.id}}</span>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <b>E-mail: </b>
+            <span>{{user.email}}</span>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <b>Телефон: </b>
+            <span>{{user.phone}}</span>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <b>Специалист: </b>
+            <span>{{user.specialistName}}</span>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 <ng-template #loading>
-  <ion-progress-bar color="primary" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar color="tertiary" type="indeterminate"></ion-progress-bar>
 </ng-template>
 
 <ng-template #loadingTitle>

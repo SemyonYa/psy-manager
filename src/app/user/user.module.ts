@@ -10,6 +10,7 @@ import { UserListComponent } from './children/user-list/user-list.component';
 import { UserEditComponent } from './children/user-edit/user-edit.component';
 import { UserRoutingModule } from './user-routing.module';
 import { UserViewComponent } from './children/user-view/user-view.component';
+import { ResetChildPasswordComponent } from './children/reset-child-password/reset-child-password.component';
 
 
 @NgModule({
@@ -24,7 +25,11 @@ import { UserViewComponent } from './children/user-view/user-view.component';
     UserViewComponent,
     UserCreateComponent,
     UserListComponent,
-    UserEditComponent
+    UserEditComponent,
+    ResetChildPasswordComponent
+  ],
+  entryComponents: [
+    ResetChildPasswordComponent
   ]
 })
 export class UserPageModule {}

@@ -1,12 +1,15 @@
 <ion-content>
   <ion-row>
-    <ion-col size="10" size-sm="10" size-sm-offset="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4" offset-xl="4" text-center>
+    <ion-col size="10" size-sm="10" size-sm-offset="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
+      offset-xl="4" text-center>
       <!-- <ion-icon name="calendar" size="large"></ion-icon> -->
       <ion-item>
         <!-- <ion-label>Месяц</ion-label> -->
-        <ion-datetime display-format="MMMM, YYYY" center [monthNames]="monthNames" [min]="minDate" [max]="maxDate" [value]="currentDateString" (ionChange)="changeMonth()" doneText="Выбрать" cancelText="Отмена"></ion-datetime>
+        <ion-datetime #dateNode display-format="MMMM, YYYY" center [monthNames]="monthNames" [min]="minDate"
+          [max]="maxDate" [value]="currentDateString" (ionChange)="changeMonth(dateNode)" doneText="Выбрать"
+          cancelText="Отмена"></ion-datetime>
       </ion-item>
-    </ion-col>  
+    </ion-col>
   </ion-row>
   <ion-row>
     <ion-col size="2" offset-sm="4" class="arrow-column">
@@ -19,7 +22,7 @@
   <ion-row>
     <ion-col size="12" size-sm="11" size-md="10" offset-md="1" size-lg="8" offset-lg="2" size-xl="6" offset-xl="3">
       <ion-card text-center>
-        <ion-card-header color="primary">
+        <ion-card-header color="secondary">
           <ion-card-subtitle>{{month.y}}</ion-card-subtitle>
           <ion-card-title>{{month.name}}</ion-card-title>
         </ion-card-header>

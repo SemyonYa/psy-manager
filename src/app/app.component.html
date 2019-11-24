@@ -1,58 +1,62 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu type="overlay">
-      <ion-header>
+      <ion-header *ngIf="authData.value != null">
         <ion-toolbar>
           <ion-title>{{authData.value?.organization}}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/desktop']" routerLinkActive="active-menu-item">
+        <ion-list *ngIf="authData.value != null">
+          <ion-menu-toggle auto-hide="false"
+            *ngIf="authData.value.role === 'manager' || authData.value.role === 'spec'">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/desktop']" routerLinkActive="active-menu-item-primary">
               <ion-icon slot="start" name="desktop"></ion-icon>
               <ion-label>
                 Рабочий стол
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/specialist']" routerLinkActive="active-menu-item">
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value.role === 'manager'">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/specialist']" routerLinkActive="active-menu-item-secondary">
               <ion-icon slot="start" name="people"></ion-icon>
               <ion-label>
                 Специалисты
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/user']" routerLinkActive="active-menu-item">
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value.role === 'manager'">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/user']" routerLinkActive="active-menu-item-tertiary">
               <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>
                 Пользователи
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false" *ngIf="authData.value != null">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/profile']" routerLinkActive="active-menu-item">
+          <ion-menu-toggle auto-hide="false" *ngIf="authData.value.role === 'manager'">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/profile']" routerLinkActive="active-menu-item-primary">
               <ion-icon slot="start" name="settings"></ion-icon>
               <ion-label>
                 Профиль
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false" *ngIf="authData.value == null">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/login']" routerLinkActive="active-menu-item">
-              <ion-icon slot="start" name="log-in"></ion-icon>
-              <ion-label>
-                Вход
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-          <ion-menu-toggle auto-hide="false" (click)="logout()" *ngIf="authData.value != null">
+          <ion-menu-toggle auto-hide="false" (click)="logout()">
             <ion-item>
               <ion-icon slot="start" name="log-out"></ion-icon>
               <ion-label>
                 Выход ({{authData.value.login}})
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <img src="/assets/icon/logo.svg" [ngStyle]="{marginTop: '10%', padding: '10%'}" />
+        <ion-list *ngIf="authData.value == null">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/login']" routerLinkActive="active-menu-item">
+              <ion-icon slot="start" name="log-in"></ion-icon>
+              <ion-label>
+                Вход
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

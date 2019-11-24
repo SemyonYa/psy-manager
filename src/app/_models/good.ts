@@ -21,10 +21,10 @@ export class Good {
 
     static createForm(specialistId): FormGroup {
         return new FormGroup({
-            name: new FormControl('', Validators.required),
+            name: new FormControl('', [Validators.required, Validators.maxLength(45)]),
             description: new FormControl(''),
-            price: new FormControl(0, [Validators.required, Validators.min(0)]),
-            duration: new FormControl(0, [Validators.required, Validators.min(0)]),
+            price: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(10000000)]),
+            duration: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(1440)]),
             specialistId: new FormControl(specialistId),
             invisible: new FormControl(0)
         });
@@ -33,10 +33,10 @@ export class Good {
     editForm(): FormGroup {
         return new FormGroup({
             id: new FormControl(this.id),
-            name: new FormControl(this.name, Validators.required),
+            name: new FormControl(this.name, [Validators.required, Validators.maxLength(45)]),
             description: new FormControl(this.description),
-            price: new FormControl(this.price, [Validators.required, Validators.min(0)]),
-            duration: new FormControl(this.duration, [Validators.required, Validators.min(0)]),
+            price: new FormControl(this.price, [Validators.required, Validators.min(0), Validators.max(10000000)]),
+            duration: new FormControl(this.duration, [Validators.required, Validators.min(0), Validators.max(1440)]),
             specialistId: new FormControl(this.specialistId),
             invisible: new FormControl(this.invisible)
         });

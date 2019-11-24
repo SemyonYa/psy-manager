@@ -1,11 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
+      <ion-button (click)="resetChildPassword()">
+        <ion-icon slot="icon-only" name="key" title="Сбросить пароль..."></ion-icon>
+      </ion-button>
       <ion-button (click)="delete()">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
+        <ion-icon slot="icon-only" name="trash" title="Удалить пользователя..."></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title *ngIf="user;else loadingTitle">{{user.login}}: редактирование</ion-title>
@@ -13,39 +16,43 @@
 </ion-header>
 
 <ion-content *ngIf="form;else loading">
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <input formControlName="id" type="hidden" />
-    <input formControlName="specialistId" type="hidden" />
-    <ion-item>
-      <ion-label position="floating">E-Mail</ion-label>
-      <ion-input formControlName="email" type="text" maxLength="50"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Телефон</ion-label>
-      <ion-input formControlName="phone" type="text" maxLength="10"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Логин</ion-label>
-      <ion-input formControlName="login" type="text" maxLength="20"></ion-input>
-      <p *ngIf="form.get('login').errors" [ngStyle]="{margin: '0'}">
-        <span class="text-danger" *ngIf="form.get('login').errors['loginIsUsed']">Логин уже занят!</span>
-      </p>
-    </ion-item>
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-button color="primary" type="submit" fill="solid" [disabled]="form.invalid">
-          <ion-icon slot="start" name="checkmark"></ion-icon>
-          Сохранить
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </form>
+  <ion-card>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <input formControlName="id" type="hidden" />
+      <input formControlName="specialistId" type="hidden" />
+      <ion-item>
+        <ion-label position="stacked">E-Mail</ion-label>
+        <ion-input formControlName="email" type="text" maxLength="50"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Телефон</ion-label>
+        <ion-input formControlName="phone" type="text" maxLength="10"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Логин</ion-label>
+        <ion-input formControlName="login" type="text" maxLength="20"></ion-input>
+        <p *ngIf="form.get('login').errors" [ngStyle]="{margin: '0'}">
+          <span class="text-danger" *ngIf="form.get('login').errors['loginIsUsed']">Логин уже занят!</span>
+        </p>
+      </ion-item>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+          <ion-button color="tertiary" routerDirection="root" size="small" [disabled]="form.invalid"
+            (click)="submitBtn.click()">
+            <ion-icon slot="end" name="checkmark"></ion-icon>
+            Сохранить
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </form>
+  </ion-card>
 </ion-content>
 
 <ng-template #loading>
-    <div [ngStyle]="{height: '100%'}">
-      <ion-progress-bar color="primary" type="indeterminate"></ion-progress-bar>
-    </div>
+  <div [ngStyle]="{height: '100%'}">
+    <ion-progress-bar color="tertiary" type="indeterminate"></ion-progress-bar>
+  </div>
 </ng-template>
 
 <ng-template #loadingTitle>

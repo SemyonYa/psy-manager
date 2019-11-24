@@ -1,9 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- <ion-header>
+</ion-header> -->
 
 <ion-content>
-
+  <ion-toolbar>
+    <ion-buttons slot="end" class="toolbar-btns">
+      <ion-button fill="outline" color="primary" (click)="edit()">
+        <ion-icon slot="start" name="create"></ion-icon>
+        Редактирование
+      </ion-button>
+      <ion-button fill="outline" color="primary" (click)="resetPassword()">
+        <ion-icon slot="start" name="key"></ion-icon>
+        Сменить пароль
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-title>profile</ion-title> -->
+  </ion-toolbar>
+  <ion-row>
+    <ion-col size="12" size-sm="12" size-md="8" size-xl="9">
+      <ion-card>
+        <form *ngIf="form;else loading" [formGroup]="form" (ngSubmit)="submit()">
+          <ion-item>
+            <ion-label position="stacked">E-Mail</ion-label>
+            <ion-input formControlName="email" type="text" [readonly]="!editable"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Наименование организации</ion-label>
+            <ion-textarea rows="2" formControlName="organizationName" type="text" [readonly]="!editable"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Телефон</ion-label>
+            <div [ngStyle]="{display: 'flex'}">
+              <span [ngStyle]="{padding: '8px'}">+7</span>
+              <ion-input formControlName="phone" type="text" maxLength="10" [readonly]="!editable"
+                placeholder="XXXXXXXXXX">
+              </ion-input>
+            </div>
+          </ion-item>
+          <!-- <ion-item>
+        <ion-label position="stacked">Телефон</ion-label>
+        <ion-input formControlName="phone" type="text" [readonly]="!editable"></ion-input>
+      </ion-item> -->
+          <ion-item>
+            <ion-label position="stacked">Количество специалистов</ion-label>
+            <ion-input formControlName="specialistsQuantity" type="text" [readonly]="true"></ion-input>
+          </ion-item>
+          <ion-toolbar *ngIf="editable">
+            <ion-buttons slot="end">
+              <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+              <ion-button color="primary" (click)="submitBtn.click()" [disabled]="form.invalid">
+                <ion-icon slot="icon-only" name="save"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </form>
+        <div class="alert alert-success" *ngIf="success" [ngStyle]="{margin: '10px'}">
+          Успешно сохранено!
+        </div>
+        <div class="alert alert-danger" *ngIf="impossible" [ngStyle]="{margin: '10px'}">
+          Не удалось обновить данные. Попробуйте позже...
+        </div>
+      </ion-card>
+    </ion-col>
+    <ion-col size="12" size-sm="12" size-md="4" size-xl="3">
+      <ion-card [ngStyle]="{maxWidth: '300px'}" *ngIf="profile">
+        <ion-card-header [ngStyle]="{padding: '0'}">
+          <div class="img" [ngStyle]="{backgroundImage: 'url(' + profile.img + ')'}"></div>
+        </ion-card-header>
+        <ion-card-content text-center [ngStyle]="{padding: '3px'}">
+          <input [ngStyle]="{display: 'none'}" #fileInput type="file" (change)="loadLogo($event)" />
+          <ion-icon color="primary" size="large" (click)="fileInput.click()" slot="icon-only" name="image"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
 </ion-content>
+
+<ng-template #loading>
+  <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
+</ng-template>

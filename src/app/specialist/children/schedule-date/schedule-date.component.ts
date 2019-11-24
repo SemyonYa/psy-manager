@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/_services/data.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Seance } from 'src/app/_models/seance';
 import { ModalController, AlertController } from '@ionic/angular';
 import { ScheduleCreateModalComponent } from '../schedule-create/schedule-create-modal.component';
@@ -10,6 +10,8 @@ import { ScheduleShareModalComponent } from '../schedule-share-modal/schedule-sh
 import { ScheduleCopyModalComponent } from '../schedule-copy-modal/schedule-copy-modal.component';
 import { HelpMe } from 'src/app/_models/help-me';
 import { Good } from 'src/app/_models/good';
+import { FiveMinutes } from 'src/app/_models/five-minutes';
+import { Specialist } from 'src/app/_models/specialist';
 
 @Component({
   selector: 'app-schedule-date',
@@ -17,92 +19,77 @@ import { Good } from 'src/app/_models/good';
   styleUrls: ['./schedule-date.component.scss'],
 })
 export class ScheduleDateComponent implements OnInit {
+  monthNames = [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь'
+  ];
+  id: number;
+  specialist: Observable<Specialist>;
   date: Date;
-  specialistId: number;
-  fiveMinutes: {
-    n: number,
-    hour: number,
-    minutes: number,
-    seance: number,
-    good: string,
-    isStart: boolean,
-    isEnd: boolean
-  }[] = [];
-  goods: Good[];
+  fms: FiveMinutes[] = [];
   seances: Seance[] = [];
-  minDate: Date;
-  maxDate: Date;
+  goods: Good[];
+  minDate: Date = new Date((new Date()).getFullYear() - 1, 0, 1);
+  maxDate: Date = new Date((new Date()).getFullYear() + 1, 11, 31);
+  // maxDateString = HelpMe.dateToString();
 
 
   // tslint:disable-next-line:max-line-length
   constructor(private activatedRoute: ActivatedRoute, private dataService: DataService, public modalController: ModalController, private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.parent.params.id;
     const dateString = this.activatedRoute.snapshot.params.date;
     this.date = new Date(dateString);
-    this.specialistId = this.activatedRoute.snapshot.parent.params.id;
-    this.minDate = new Date(this.date.getFullYear(), this.date.getMonth() * 1 + 1, 1, 0, 0, 0, 0);
-    this.maxDate = new Date(this.date.getFullYear() * 1 + 1, 12, 31, 23, 59, 59, 0);
-    // if (this.date < this.minDate || this.date > this.maxDate) {
-    //   this.date = new Date();
-    //   this.router.navigateByUrl('/specialist/' + this.specialistId + '/schedule');
-    // }
-    this.dataService.getSeances(this.specialistId, dateString); // HelpMe.dateToString(this.date));
-    this.dataService.getGoods(this.specialistId);
-    this.dataService.goods
-      .subscribe(
-        (data: Good[]) => {
-          this.goods = data;
-          this.dataService.seances
-            .subscribe(
-              (data2: Seance[]) => {
-                this.fillFiveMinutes();
-                this.seances = data2;
-                for (const seance of data2) {
-                  const start = (seance.time.hours * 60 + seance.time.minutes) / 5;
-                  const end = start + seance.duration / 5;
-                  const id = seance.id;
-                  for (let i = start; i < end; i++) {
-                    this.fiveMinutes[i].seance = id;
-                    this.fiveMinutes[i].isStart = (i === start);
-                    this.fiveMinutes[i].isEnd = (i === (end - 1));
-                    this.fiveMinutes[i].good = this.goods.find(g => g.id == seance.goodId).name;
-                  }
-                }
-              }
-            );
-        }
-      );
+    if (this.date > this.maxDate || this.date < this.minDate) {
+      this.date = new Date();
+    }
+    this.specialist = this.dataService.getSpecialist(this.id);
+    this.fillFms();
+    this.fillSeances();
   }
 
-  private fillFiveMinutes() {
-    this.fiveMinutes = [];
+  fillFms() {
     for (let i = 1; i <= 288; i++) {
-      this.fiveMinutes.push({
-        n: i,
-        hour: Math.floor((i - 1) / 12),
-        minutes: (i - 1) * 5 % 60,
-        seance: 0,
-        isStart: false,
-        isEnd: false,
-        good: ''
-      });
+      this.fms.push(
+        new FiveMinutes(i, Math.floor((i - 1) / 12), (i - 1) * 5 % 60, 0, '', false, false)
+      );
     }
+  }
+
+  fillSeances() {
+    this.dataService.getSeances(this.id, HelpMe.dateToString(this.date))
+      .subscribe(
+        (data: Seance[]) => {
+          this.seances = data;
+        }
+      );
   }
 
   openTime(seanceId, hour, minutes) {
     if (seanceId) {
       this.edit(seanceId);
     } else {
-      this.create(HelpMe.stringTimeFromParams(hour, minutes));
+      this.create(hour, minutes);
     }
   }
 
-  async create(time) {
+  async create(hour, minutes) {
+    const time = HelpMe.stringTimeFromParams(hour, minutes);
     const modal = await this.modalController.create({
       component: ScheduleCreateModalComponent,
       componentProps: {
-        specialistId: this.specialistId,
+        specialistId: this.id,
         date: this.date,
         time
       }
@@ -114,7 +101,7 @@ export class ScheduleDateComponent implements OnInit {
     const modal = await this.modalController.create({
       component: ScheduleEditComponent,
       componentProps: {
-        specialistId: this.specialistId,
+        specialistId: this.id,
         date: this.date,
         id
       },
@@ -127,7 +114,7 @@ export class ScheduleDateComponent implements OnInit {
     const modal = await this.modalController.create({
       component: ScheduleCopyModalComponent,
       componentProps: {
-        specialistId: this.specialistId,
+        specialistId: this.id,
         date: this.date,
       }
     });
@@ -138,7 +125,7 @@ export class ScheduleDateComponent implements OnInit {
     const modal = await this.modalController.create({
       component: ScheduleShareModalComponent,
       componentProps: {
-        specialistId: this.specialistId,
+        specialistId: this.id,
         date: this.date,
       },
       cssClass: 'edit-modal'
@@ -146,13 +133,13 @@ export class ScheduleDateComponent implements OnInit {
     return await modal.present();
   }
 
-   clearDateFn() {
-    this.dataService.clearDate(this.specialistId, HelpMe.dateToString(this.date))
+  clearDateFn() {
+    this.dataService.clearDate(this.id, HelpMe.dateToString(this.date))
       .subscribe(
         (resp) => {
           if (resp === true) {
-            this.dataService.getSeances(this.specialistId, HelpMe.dateToString(this.date));
-            this.dataService.getWorkdays(this.specialistId, this.date.getFullYear(), this.date.getMonth() * 1 + 1 * 1);
+            this.dataService.getSeances(this.id, HelpMe.dateToString(this.date));
+            this.dataService.getWorkdays(this.id, this.date.getFullYear(), this.date.getMonth() * 1 + 1 * 1);
           }
         }
       );

@@ -11,8 +11,10 @@ export class Seance {
     price: number;
     status: number;
     goodId: number;
+    goodName: string;
 
-    constructor(id: string, date: string, time: string, duration: string, price: string, status: string, goodId: string) {
+    // tslint:disable-next-line:max-line-length
+    constructor(id: string, date: string, time: string, duration: string, price: string, status: string, goodId: string, goodName: string = '') {
         this.id = Number.parseInt(id, 10);
         this.date = date;
         this.time = { hours: Number.parseInt(time.split(':')[0], 10), minutes: Number.parseInt(time.split(':')[1], 10) };
@@ -20,9 +22,9 @@ export class Seance {
         this.price = Number.parseInt(price, 10);
         this.status = Number.parseInt(status, 10);
         this.goodId = Number.parseInt(goodId, 10);
+        this.goodName = goodName;
     }
 
-    // tslint:disable-next-line:max-line-length
     static createForm(specialistId, date: Date, time: string, checkForm: AsyncValidatorFn): FormGroup {
         const dateFormated = HelpMe.dateToString(date);
         return new FormGroup({

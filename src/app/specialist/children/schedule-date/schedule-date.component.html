@@ -21,12 +21,29 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="timing">
-    <div *ngFor="let f of fiveMinutes"
-      [ngClass]="{'five-minutes': true, 'busy': f.seance > 0, 'start': f.isStart, 'end': f.isEnd }"
-      (click)="openTime(f.seance, f.hour, f.minutes)">
-      <h5 *ngIf="(f.n - 1) % 12 == 0">{{f.hour | number:'2.0-0'}}:00 </h5>
-      <h6 *ngIf="f.isStart">{{f.good}}</h6>
-    </div>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{date | date:'dd.MM.yyyy'}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let seance of seances" [ngStyle]="{marginTop: seance.getMarginTop(), height: seance.getHeight()}"
+        (click)="edit(seance.id)"
+        [ngClass]="{'seance': true, 'created': seance.status === 1, 'scheduled': seance.status === 2, 'aborted': seance.status === 3, 'finished': seance.status === 4}">
+        <h6>{{seance.goodName}}</h6>
+      </div>
+      <div *ngFor="let fm of fms"
+        [ngClass]="{'five-minutes': true, 'hour-start': fm.minutes === 0, minutes20: fm.minutes % 15 === 0}" (click)="create(fm.hour, fm.minutes)">
+        <span [ngClass]="{'minutes': true}" *ngIf="fm.minutes % 15 === 0">{{fm.minutes | number:'2.0-0'}}</span>
+        <span class="hour" *ngIf="fm.minutes === 0">{{fm.hour | number:'2.0-0'}}</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+<!-- <div class="timing">
+      <div *ngFor="let f of fiveMinutes"
+        [ngClass]="{'five-minutes': true, 'busy': f.seance > 0, 'start': f.isStart, 'end': f.isEnd }"
+        (click)="openTime(f.seance, f.hour, f.minutes)">
+        <h5 *ngIf="(f.n - 1) % 12 == 0">{{f.hour | number:'2.0-0'}}:00 </h5>
+        <h6 *ngIf="f.isStart">{{f.good}}</h6>
+      </div>
+    </div> -->

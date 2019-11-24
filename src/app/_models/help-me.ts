@@ -1,6 +1,11 @@
 import { Time } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 export class HelpMe {
+    static getImg(path) {
+        return (path) ? environment.host + path : '/assets/icon/logo.svg';
+    }
+
     static dateToString(date: Date) {
         const formatedY = date.getFullYear();
         const formatedM = (date.getMonth().toString().length === 1) ? '0' + (date.getMonth() * 1 + 1 * 1) : (date.getMonth() * 1 + 1 * 1);
@@ -25,4 +30,5 @@ export class HelpMe {
         const formatedMinutes = (m.toString().length === 1) ? '0' + m : m;
         return formatedHour + ':' + formatedMinutes;
     }
+
 }

@@ -1,11 +1,4 @@
-<!-- <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Вход в систему</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content class="ion-padding">
-
   <ion-row>
     <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
       offset-xl="4">
@@ -13,25 +6,26 @@
         <form *ngIf="form" [formGroup]="form" (ngSubmit)="login()">
           <input type="hidden" formControlName="app" />
           <ion-card-header>
-            <ion-card-title class="ion-text-center">Вход в систему</ion-card-title>
+            <ion-card-title color="medium">Вход в систему</ion-card-title>
           </ion-card-header>
 
           <ion-card-content>
-            <ion-item lines="none">
-              <ion-label position="stacked">Email</ion-label>
-              <ion-input type="text" placeholder="login" formControlName="login"></ion-input>
+            <ion-item>
+              <ion-label position="floating">Логин</ion-label>
+              <ion-input type="text" formControlName="login"></ion-input>
             </ion-item>
-
-            <ion-item lines="none">
-              <ion-label position="stacked">Password</ion-label>
-              <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+            <ion-item>
+              <ion-label position="floating">Пароль</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
-
-            <ion-button expand="block" type="submit" [disabled]="form.invalid">Login</ion-button>
+            <button type="submit" #submitBtn [ngStyle]="{display: 'none'}"></button>
+            <ion-button fill="outline" expand="block" (click)="submitBtn.click()" [disabled]="form.invalid">
+              <ion-icon slot="end" name="checkmark"></ion-icon>
+              Войти
+            </ion-button>
           </ion-card-content>
         </form>
       </ion-card>
     </ion-col>
   </ion-row>
-
 </ion-content>

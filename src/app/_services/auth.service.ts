@@ -54,6 +54,10 @@ export class AuthService {
     return this.authData.value.organization;
   }
 
+  getRole() {
+    return this.authData.value.role;
+  }
+
   // getToken() {
   //   const token = JSON.parse(localStorage.getItem(TOKEN_KEY));
   //   console.log(token);

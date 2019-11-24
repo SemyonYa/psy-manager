@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="updatePage()">
+      <ion-button color="light" (click)="updatePage()">
         <ion-icon name="refresh-circle" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -19,7 +19,7 @@
             <ion-label>неделя</ion-label>
           </ion-segment-button>
         </ion-segment>
-        <ion-datetime #dateNode value="{{date | date:'yyyy-MM-dd'}}" displayFormat="DD MMMM YYYY" [max]="maxDate"
+        <ion-datetime #dateNode value="{{date | date:'yyyy-MM-dd'}}" displayFormat="DD MMMM YYYY" [min]="minDateString" [max]="maxDateString"
           cancelText="Отмена" doneText="Ок" [monthNames]="monthNames" (ionChange)="selectDate(dateNode)"></ion-datetime>
       </div>
     </ion-title>
@@ -38,7 +38,7 @@
         <div *ngFor="let seance of seances" [ngStyle]="{marginTop: seance.getMarginTop(), height: seance.getHeight()}"
           (click)="openSeance(seance.id)"
           [ngClass]="{'seance': true, 'created': seance.status === 1, 'scheduled': seance.status === 2, 'aborted': seance.status === 3, 'finished': seance.status === 4}">
-          <h6>{{seance.goodId + ' -- ' + seance.id}}</h6>
+          <h6>{{seance.goodName}}</h6>
         </div>
         <div *ngFor="let fm of fms"
           [ngClass]="{'five-minutes': true, 'hour-start': fm.minutes === 0, minutes20: fm.minutes % 15 === 0}">
@@ -59,7 +59,7 @@
         <div *ngFor="let seance of (day.seances | async)" [ngStyle]="{marginTop: seance.getMarginTop(), height: seance.getHeight()}"
           (click)="openSeance(seance.id)"
           [ngClass]="{'seance': true, 'created': seance.status === 1, 'scheduled': seance.status === 2, 'aborted': seance.status === 3, 'finished': seance.status === 4}">
-          <h6>{{seance.goodId + ' -- ' + seance.id}}</h6>
+          <h6>{{seance.goodName}}</h6>
         </div>
         <div *ngFor="let fm of fms"
           [ngClass]="{'five-minutes': true, 'hour-start': fm.minutes === 0, minutes20: fm.minutes % 15 === 0}">
